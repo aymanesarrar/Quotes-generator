@@ -1,14 +1,23 @@
 import { useState, useEffect } from "react";
 
-type Data = Record<string, string>;
+export interface Data {
+  _id: string;
+  quoteText: string;
+  quoteAuthor: string;
+  quoteGenre: string;
+  __v: string;
+}
 
-const useFetch = (endpoint: string) => {
-  const [data, setData] = useState<Data | undefined>(undefined);
+const useFetch = (endpoint: string): Data[] | undefined => {
+  const [data, setData] = useState<Data[] | undefined>(undefined);
 
   useEffect(() => {
     const getData = async () => {
       const data = await fetch(endpoint).then((res) => res.json());
-      return data;
+      if ("data" in data) setData(data.data);
     };
-  }, []);
+    getData();
+  }, [endpoint]);
+  return data;
 };
+export default useFetch;
