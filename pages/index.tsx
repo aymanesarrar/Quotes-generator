@@ -11,15 +11,21 @@ const Home: NextPage = () => {
   );
   console.log(data);
   return (
-    <Box minH="100vh" position="relative">
+    <Flex minH="100vh" flexDirection="column">
       <Flex justifyContent="flex-end" width="100%" padding="1.5rem" gap="1rem">
         <Button marginLeft="auto">random</Button>
         <Button onClick={toggleColorMode}>
           {colorMode === "light" ? <MdLightMode /> : <MdNightlight />}
         </Button>
       </Flex>
-      <Flex>
-        <Flex flex="1" border="1px solid black" flexDirection="column">
+      <Flex flex="1">
+        <Flex
+          flex="1"
+          border="1px solid black"
+          flexDirection="column"
+          alignItems="center"
+          justifyContent="center"
+        >
           {data &&
             data.map((text) => (
               <Text key={text?._id} as="p">
@@ -28,7 +34,7 @@ const Home: NextPage = () => {
             ))}
         </Flex>
       </Flex>
-    </Box>
+    </Flex>
   );
 };
 
