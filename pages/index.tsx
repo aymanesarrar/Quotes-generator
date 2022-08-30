@@ -1,7 +1,16 @@
-import { Box, Button, Flex, Text, useColorMode } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  HStack,
+  Text,
+  useColorMode,
+  VStack,
+} from "@chakra-ui/react";
 import type { NextPage } from "next";
 import { useEffect } from "react";
 import { MdLightMode, MdNightlight } from "react-icons/md";
+import { BsArrowRight } from "react-icons/bs";
 import useFetch, { Data } from "../components/hooks/useFetch";
 
 const Home: NextPage = () => {
@@ -28,9 +37,35 @@ const Home: NextPage = () => {
         >
           {data &&
             data.map((text) => (
-              <Text key={text?._id} as="p">
-                {text?.quoteText}
-              </Text>
+              <VStack key={text?._id} gap="2rem">
+                <Text
+                  as="p"
+                  width="50%"
+                  fontSize="2xl"
+                  textAlign="start"
+                  padding="2rem"
+                  borderLeft="8px solid #F7DF94"
+                  fontWeight="bold"
+                >
+                  {text?.quoteText}
+                </Text>
+                <HStack
+                  backgroundColor="#333333"
+                  width="50%"
+                  justifyContent="space-between"
+                  padding="2rem"
+                >
+                  <VStack>
+                    <Text as="h2" color="white" fontWeight="bold">
+                      {text?.quoteAuthor}
+                    </Text>
+                    <Text color="#828282" fontWeight="bold" as="span">
+                      {text?.quoteGenre}
+                    </Text>
+                  </VStack>
+                  <BsArrowRight color="white" fontWeight="bold" />
+                </HStack>
+              </VStack>
             ))}
         </Flex>
       </Flex>
