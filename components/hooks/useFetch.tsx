@@ -9,7 +9,9 @@ export interface Data {
 }
 
 const useFetch = (endpoint: string): Data[] | undefined => {
-  const [data, setData] = useState<Data[] | undefined>(undefined);
+  const [data, setData] = useState<Data[]>([
+    { _id: "", quoteText: "", quoteAuthor: "", quoteGenre: "", __v: "" },
+  ]);
 
   useEffect(() => {
     const getData = async () => {

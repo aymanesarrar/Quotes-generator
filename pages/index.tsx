@@ -4,33 +4,29 @@ import {
   Flex,
   HStack,
   Text,
+  transition,
   useColorMode,
   VStack,
 } from "@chakra-ui/react";
 import type { NextPage } from "next";
-import { useEffect } from "react";
+import { createContext, useState } from "react";
 import { MdLightMode, MdNightlight } from "react-icons/md";
 import { BsArrowRight } from "react-icons/bs";
 import useFetch, { Data } from "../components/hooks/useFetch";
+import Layout from "../components/Layout";
+
+export const changeContext = createContext({});
 
 const Home: NextPage = () => {
-  const { colorMode, toggleColorMode } = useColorMode();
+  const [state, setState] = useState<boolean>(false);
   const data: Data[] | undefined = useFetch(
     "https://quote-garden.herokuapp.com/api/v3/quotes/random"
   );
-  console.log(data);
   return (
-    <Flex minH="100vh" flexDirection="column">
-      <Flex justifyContent="flex-end" width="100%" padding="1.5rem" gap="1rem">
-        <Button marginLeft="auto">random</Button>
-        <Button onClick={toggleColorMode}>
-          {colorMode === "light" ? <MdLightMode /> : <MdNightlight />}
-        </Button>
-      </Flex>
-      <Flex flex="1">
+    <changeContext.Provider value={{ state, setState }}>
+      <Layout random={true}>
         <Flex
           flex="1"
-          border="1px solid black"
           flexDirection="column"
           alignItems="center"
           justifyContent="center"
@@ -54,12 +50,18 @@ const Home: NextPage = () => {
                   width="50%"
                   justifyContent="space-between"
                   padding="2rem"
+                  cursor="pointer"
                 >
-                  <VStack>
+                  <VStack alignItems="flex-start">
                     <Text as="h2" color="white" fontWeight="bold">
                       {text?.quoteAuthor}
                     </Text>
-                    <Text color="#828282" fontWeight="bold" as="span">
+                    <Text
+                      color="#828282"
+                      textAlign="start"
+                      fontWeight="bold"
+                      as="span"
+                    >
                       {text?.quoteGenre}
                     </Text>
                   </VStack>
@@ -68,8 +70,8 @@ const Home: NextPage = () => {
               </VStack>
             ))}
         </Flex>
-      </Flex>
-    </Flex>
+      </Layout>
+    </changeContext.Provider>
   );
 };
 
