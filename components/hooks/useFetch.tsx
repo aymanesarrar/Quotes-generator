@@ -8,7 +8,7 @@ export interface Data {
   __v: string;
 }
 
-const useFetch = (endpoint: string, random: boolean): Data[] | undefined => {
+const useFetch = (endpoint: string, random?: boolean): Data[] | undefined => {
   const [data, setData] = useState<Data[]>([
     { _id: "", quoteText: "", quoteAuthor: "", quoteGenre: "", __v: "" },
   ]);
