@@ -3,6 +3,7 @@ import {
   Button,
   Flex,
   HStack,
+  Spinner,
   Text,
   transition,
   useColorMode,
@@ -20,6 +21,7 @@ import { randomizeState } from "../utils/states";
 
 const Home: NextPage = () => {
   const randomize = useRecoilValue(randomizeState);
+
   const data: Data[] | undefined = useFetch(
     "https://quote-garden.herokuapp.com/api/v3/quotes/random",
     randomize
@@ -35,7 +37,7 @@ const Home: NextPage = () => {
         alignItems="center"
         justifyContent="center"
       >
-        {data &&
+        {data && data[0]._id.length !== 0 ? (
           data.map((text) => (
             <VStack key={text?._id} gap="2rem">
               <Text
@@ -73,7 +75,10 @@ const Home: NextPage = () => {
                 <BsArrowRight color="white" fontWeight="bold" />
               </HStack>
             </VStack>
-          ))}
+          ))
+        ) : (
+          <Spinner />
+        )}
       </Flex>
     </Layout>
   );
