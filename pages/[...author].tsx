@@ -4,13 +4,17 @@ import { ReactNode } from "react";
 import useFetch, { Data } from "../components/hooks/useFetch";
 import Layout from "../components/Layout";
 import { BsArrowRight } from "react-icons/bs";
+import { useRecoilValue } from "recoil";
+import { randomizeState } from "../utils/states";
 
 const Author = (): ReactNode => {
   const router = useRouter();
+  const randomize = useRecoilValue(randomizeState);
   const data: Data[] | undefined = useFetch(
     `https://quote-garden.herokuapp.com/api/v3/quotes?author=${
       router.query.author ? router.query.author[0] : ""
-    }`
+    }`,
+    randomize
   );
   return (
     <Layout random={false}>
